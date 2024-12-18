@@ -9,6 +9,7 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -29,14 +30,16 @@ public class JobSeeker {
 	
 	@DecimalMin(value = "6000000000", message="* Enter proper mobile number")
 	@DecimalMax(value = "9999999999", message="* Enter proper mobile number")
+	@NotNull(message = "* It is Required Field")
 	private Long mobile;
 	
-	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message="* Enter minimum 8 characters, one upper case, one lower case letter, one digit and one special character")
+	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "* Enter minimum 8 charecter, one uppercase, one lowercase, one number and one special charecter")
 	private String password;
 	
 	@Transient
-	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message= "* Enter minimum 8 characters, one upper case, one lower case letter, one digit and one special character")
+	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "* Enter minimum 8 charecter, one uppercase, one lowercase, one number and one special charecter")
 	private String confirmPassword;
 	
-	private boolean verified;
+	private Boolean verified;
+	private Integer otp;
 }
