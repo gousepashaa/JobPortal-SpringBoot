@@ -20,16 +20,13 @@ public class JobSeeker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Size(min=3, max=30, message="* Enter between 3~30 characters")
+	@Size(min = 3, max = 30, message = "* Enter between 3~30 charecters")
 	private String name;
-	
-	@Email(message="* Enter valid email")
-	@NotEmpty(message = "* It is required field")
+	@Email(message = "* Enter Proper Email")
+	@NotEmpty(message = "* It is Required Field")
 	private String email;
-	
-	@DecimalMin(value = "6000000000", message="* Enter proper mobile number")
-	@DecimalMax(value = "9999999999", message="* Enter proper mobile number")
+	@DecimalMin(value = "6000000000", message = "* Enter Proper Mobile Number")
+	@DecimalMax(value = "9999999999", message = "* Enter Proper Mobile Number")
 	@NotNull(message = "* It is Required Field")
 	private Long mobile;
 	
@@ -39,7 +36,6 @@ public class JobSeeker {
 	@Transient
 	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "* Enter minimum 8 charecter, one uppercase, one lowercase, one number and one special charecter")
 	private String confirmPassword;
-	
 	private Boolean verified;
 	private Integer otp;
 }

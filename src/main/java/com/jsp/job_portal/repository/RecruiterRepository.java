@@ -8,4 +8,8 @@ public interface RecruiterRepository extends JpaRepository<Recruiter, Integer>{
 	boolean existsByEmail(String email);
 
 	boolean existsByMobile(Long mobile);
+	
+	Recruiter findByMobile(Long mobile);
+
+	Recruiter findByEmail(String email);
 }

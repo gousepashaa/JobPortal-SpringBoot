@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Jobs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .message {
+      text-align: center;
+      color: red;
+      font-weight: bold;
+    }
+    .job-card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+    .job-card h3 {
+      margin: 0;
+      color: #333;
+    }
+    .job-card p {
+      color: #555;
+      margin: 5px 0;
+    }
+    .back-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .back-button a button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .back-button a button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Available Jobs</h1>
+
+  <!-- Display message if present -->
+  <div th:if="${message != null}" class="message">
+    <h3 th:text="${message}"></h3>
+  </div>
+
+  <!-- Loop through jobs and display each job's details -->
+  <div th:each="job : ${jobs}" class="job-card">
+    <h2 th:text="${job.role}"></h2>
+    <p><strong>Company Name:</strong> <span th:text="${job.companyName}"></span></p>
+
+    <!-- Conditional display for company picture -->
+    <div th:if="${job.companyPictureUrl != null}">
+      <img th:src="${job.companyPictureUrl}" alt="Company Picture" style="max-width: 200px;"/>
+    </div>
+    <p><strong>Description:</strong> <span th:text="${job.description}"></span></p>
+    <p><strong>Skills:</strong> <span th:text="${job.skills}"></span></p>
+    <p><strong>Location:</strong> <span th:text="${job.location}"></span></p>
+    <p><strong>CTC:</strong> <span th:text="${job.ctc}"></span></p>
+    <p><strong>Experience:</strong> <span th:text="${job.experience}"></span></p>
+    
+  </div>
+
+  <!-- Back button -->
+  <div class="back-button">
+    <a href="/jobseeker/home"><button>Back</button></a>
+  </div>
+</body>
+</html>
