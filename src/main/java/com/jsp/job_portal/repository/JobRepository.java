@@ -11,4 +11,9 @@ public interface JobRepository extends JpaRepository<Job, Integer>{
 	List<Job> findByApprovedTrue(); // Fetch jobs where approved is true
 
 	List<Job> findByRecruiter(Recruiter recruiter);
+
+	List<Job> findByRoleLikeAndApprovedTrue(String string);
+
+	List<Job> findBySkillsLikeAndApprovedTrue(String string);
+
 }

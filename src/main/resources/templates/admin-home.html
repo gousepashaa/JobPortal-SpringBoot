@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Job Portal - Find your dream job">
     <meta name="keywords" content="jobs, career, employment, job search">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
-    <title>Job Portal - Terms of Service</title>
+    <title>Job Portal - Admin Home</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -90,33 +91,56 @@
             transform: translateY(-2px);
         }
 
-        .content-section {
-            margin-top: 80px;
-            padding: 2rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 100px;
+        .alert-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1001;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.5s ease-out;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .terms-title {
-            color: var(--text-dark);
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+        .alert-message.success {
+            background-color: #27ae60;
+            color: white;
+            border-left: 4px solid #219a52;
         }
 
-        .terms-content {
-            color: #34495e;
-            line-height: 1.6;
+        .alert-message.error {
+            background-color: #e74c3c;
+            color: white;
+            border-left: 4px solid #c0392b;
         }
 
-        .terms-content h2 {
-            color: var(--text-dark);
-            margin: 1.5rem 0 1rem 0;
+        .alert-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 1.2rem;
+            padding: 0 5px;
         }
 
-        .terms-content p {
-            margin-bottom: 1rem;
+        .alert-close:hover {
+            opacity: 0.8;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .footer {
@@ -124,10 +148,9 @@
             color: white;
             padding: 2rem;
             text-align: center;
+            width: 100%;
             position: fixed;
             bottom: 0;
-            width: 100%;
-            z-index: 1000;
         }
 
         .footer-content {
@@ -159,11 +182,34 @@
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            .terms-title {
-                font-size: 2rem;
-            }
+        .content {
+            margin-top: 80px;
+            padding: 2rem;
+            text-align: center;
+        }
 
+        .content h1 {
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+
+        .content button {
+            padding: 0.8rem 2rem;
+            margin: 0.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .content button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
             .footer {
                 padding: 1.5rem 1rem;
             }
@@ -196,32 +242,27 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo"><a href="/">JobPortal</a></div>
+        <div class="logo"><a href="/admin/home">JobPortal Admin</a></div>
         <div class="nav-buttons">
-            <a href="/login"><button class="nav-btn login-btn">Login</button></a>
-            <a href="/jobseeker/register"><button class="nav-btn register-btn">Register</button></a>
+            <a href="/logout"><button class="nav-btn login-btn">Logout</button></a>
         </div>
     </nav>
 
-    <main class="content-section">
-        <h1 class="terms-title">Terms of Service</h1>
-        <div class="terms-content">
-            <h2>1. Acceptance of Terms</h2>
-            <p>By accessing and using JobPortal, you accept and agree to be bound by the terms and provision of this agreement.</p>
-
-            <h2>2. User Registration</h2>
-            <p>To access certain features of the platform, you may be required to register for an account. You agree to provide accurate information during the registration process.</p>
-
-            <h2>3. Privacy Policy</h2>
-            <p>Your use of JobPortal is also governed by our Privacy Policy. Please review our Privacy Policy, which also governs the site and informs users of our data collection practices.</p>
-
-            <h2>4. User Conduct</h2>
-            <p>You agree to use JobPortal only for lawful purposes and in a way that does not infringe the rights of, restrict or inhibit anyone else's use and enjoyment of the platform.</p>
-
-            <h2>5. Modifications</h2>
-            <p>We reserve the right to modify these terms at any time. We do so by posting and drawing attention to the updated terms on the site. Your continued use of JobPortal after changes to these terms confirms your acceptance of the updated terms.</p>
+    <div class="content">
+        <div th:if="${session.success}" class="alert-message success">
+            <span th:text="${session.success}"></span>
+            <button class="alert-close" onclick="this.parentElement.style.display='none'">×</button>
+            <th:block th:text="${@messageRemover.remove()}"></th:block>
         </div>
-    </main>
+        <div th:if="${session.error}" class="alert-message error">
+            <span th:text="${session.error}"></span>
+            <button class="alert-close" onclick="this.parentElement.style.display='none'">×</button>
+            <th:block th:text="${@messageRemover.remove()}"></th:block>
+        </div>
+
+        <h1>Admin Home Page</h1>
+        <a href="/admin/manage-jobs"><button>Manage Jobs</button></a>
+    </div>
 
     <footer class="footer">
         <div class="footer-content">
@@ -234,5 +275,16 @@
             <p class="footer-text">© 2024 JobPortal. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert-message');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>

@@ -65,20 +65,27 @@ public class JobSeekerController {
 		}
 	}
 
-	@GetMapping("/search-jobs")
-	public String loadSearchJob(HttpSession session, ModelMap map) {
-	    if (session.getAttribute("jobSeeker") != null) {
-	        List<Job> jobs = jobRepository.findAll(); // Fetch jobs
-	        if (jobs.isEmpty()) {
-	            map.put("message", "No Jobs Found");
-	        } else {
-	            map.put("jobs", jobs);
-	        }
-	        return "jobs"; // Return the template name without extension
-	    } else {
-	        map.put("message", "Invalid Session, Login First");
-	        return "login";
-	    }
+	@GetMapping("/view-jobs")
+	public String viewAllJobs(HttpSession session,ModelMap map) {
+		if (session.getAttribute("jobSeeker") != null) {
+			List<Job> jobs=jobRepository.findByApprovedTrue();
+			if(jobs.isEmpty()) {
+				session.setAttribute("error", "No Jobs Present Yet");
+				return "redirect:/jobseeker/home";
+			}else {
+				map.put("jobs", jobs);
+				return "jobseeker-jobs.html";
+			}
+			
+		} else {
+			session.setAttribute("error", "Invalid Session, Login Again");
+			return "redirect:/login";
+		}
+	}
+
+	@GetMapping("/apply/{id}")
+	public String apply(@PathVariable("id") Integer id, HttpSession session) {
+		return seekerService.apply(id, session);
 	}
 
 

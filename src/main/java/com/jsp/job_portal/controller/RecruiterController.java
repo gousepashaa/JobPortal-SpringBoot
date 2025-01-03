@@ -2,6 +2,7 @@ package com.jsp.job_portal.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.jsp.job_portal.dto.Job;
 import com.jsp.job_portal.dto.Recruiter;
@@ -131,6 +131,8 @@ public class RecruiterController {
 			}
 		}
 	 
+
+	 
 	 @GetMapping("/delete-job/{id}")
 		public String deleteJob(@PathVariable("id") int id,HttpSession session) {
 			if (session.getAttribute("recruiter") != null) {
@@ -142,4 +144,50 @@ public class RecruiterController {
 				return "redirect:/login";
 			}
 		}
+	 
+	// Show Edit Job Form
+//	 @GetMapping("/edit-job/{id}")
+//	 public String editJob(@PathVariable("id") int id, HttpSession session, ModelMap map) {
+//	     if (session.getAttribute("recruiter") != null) {
+//	         Job job = jobRepository.findById(id).orElse(null);
+//	         if (job != null) {
+//	             map.put("job", job); // Add the job object to the model
+//	             return "edit-job"; // Render the edit job page
+//	         } else {
+//	             session.setAttribute("error", "Job not found.");
+//	             return "redirect:/recruiter/manage-jobs";
+//	         }
+//	     } else {
+//	         session.setAttribute("error", "Invalid session. Please login.");
+//	         return "redirect:/login";
+//	     }
+//	 }
+//
+//
+//	    // Handle Job Update
+//	    @PostMapping("/edit-job")
+//	    public String updateJob(Job  job, HttpSession session, ModelMap map) {
+//	        if (session.getAttribute("recruiter") != null) {
+//	            try {
+//	                jobRepository.save(job); // Save updated job to the database
+//	                session.setAttribute("success", "Job updated successfully!"); // Success message
+//	                return "redirect:/recruiter/manage-jobs"; // Redirect to manage jobs page
+//	            } catch (Exception e) {
+//	                map.put("error", "Failed to update job. Error: " + e.getMessage());
+//	                return "edit-job"; // Stay on the edit job page in case of an error
+//	            }
+//	        } else {
+//	            session.setAttribute("error", "Invalid session. Please login.");
+//	            return "redirect:/login";
+//	        }
+//	    }
+//
+//	    @GetMapping("/edit-job")
+//	    public String showEditJobForm(@RequestParam("id") int id, ModelMap map) {
+//	        Optional<Job> job = jobRepository.findById(id); // Fetch job details
+//	        map.addAttribute("job", job);
+//	        return "edit-job"; // Thymeleaf template name
+//	    }
+
+
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recruiter Jobs</title>
+    <title>Admin Jobs</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -177,7 +177,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo"><a href="/recruiter/home">JobPortal Recruiter</a></div>
+        <div class="logo"><a href="/admin/home">JobPortal Admin</a></div>
         <div class="nav-buttons">
             <a href="/logout"><button class="nav-btn login-btn">Logout</button></a>
         </div>
@@ -228,21 +228,13 @@
                     <strong>Contact:</strong>
                     <span th:text="${job.recruiter.email}"></span>
                 </div>
-                <div class="job-detail">
-                    <strong>Status:</strong>
-                    <span th:if="${job.approved}">Approved</span>
-                    <span th:if="${!job.approved}">Not Approved</span>
-                </div>
-                <a th:href="'/recruiter/edit-job/'+${job.id}">
-                    <button class="status-btn">Edit</button>
-                </a>
-                <a th:href="'/recruiter/delete-job/'+${job.id}">
-                    <button class="status-btn" style="margin-top: 0.5rem; background-color: #e74c3c;">Delete</button>
+                <a th:href="'/admin/change/'+${job.id}">
+                    <button class="status-btn" th:text="${job.approved ? 'Hide' : 'Display'}"></button>
                 </a>
             </div>
         </div>
 
-        <a href="/recruiter/home" class="home-btn">Home</a>
+        <a href="/admin/home" class="home-btn">Home</a>
     </div>
 </body>
 </html>

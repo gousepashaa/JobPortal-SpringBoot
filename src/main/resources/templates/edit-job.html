@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Job</title>
+</head>
+<body>
+    <h1 align="center">Edit Job</h1>
+    <div align="center">
+        <form th:action="@{/recruiter/edit-job}" method="post">
+            <input type="hidden" th:value="${job.id}" name="id" />
+			
+            <label>Role:</label>
+            <input type="text" th:value="${job.role}" name="role" required /><br><br>
+
+            <label>Description:</label>
+            <textarea name="description" th:text="${job.description}" required></textarea><br><br>
+
+            <label>Skills:</label>
+            <input type="text" th:value="${job.skills}" name="skills" required /><br><br>
+
+            <label>Location:</label>
+            <input type="text" th:value="${job.location}" name="location" required /><br><br>
+
+            <label>CTC:</label>
+            <input type="number" th:value="${job.ctc}" name="ctc" required /><br><br>
+
+            <label>Experience (in months):</label>
+            <input type="number" th:value="${job.experience}" name="experience" required /><br><br>
+
+            <label>Company Name:</label>
+            <input type="text" th:value="${job.companyName}" name="companyName" required /><br><br>
+
+            <label>Company Picture URL:</label>
+            <input type="url" th:value="${job.companyPictureUrl}" name="companyPictureUrl" /><br><br>
+
+            <button type="submit">Update</button>
+            <a href="/recruiter/manage-jobs"><button type="button">Cancel</button></a>
+        </form>
+    </div>
+</body>
+</html>
