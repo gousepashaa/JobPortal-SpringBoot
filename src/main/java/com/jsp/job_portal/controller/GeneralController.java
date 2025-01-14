@@ -29,10 +29,10 @@ public class GeneralController {
 	private String adminEmail;
 	@Value("${portal.admin.password}")
 	private String adminPassword;
-	
+
 	@Autowired
 	JobRepository jobRepository;
-	
+
 	@Autowired
 	JobSeekerRepository jobSeekerRepository;
 
@@ -47,11 +47,6 @@ public class GeneralController {
 	@GetMapping("/about-us")
 	public String loadAbout() {
 		return "about-us.html";
-	}
-
-	@GetMapping("/contact")
-	public String contact() {
-		return "contact.html";
 	}
 
 	@GetMapping("/privacy-policy")

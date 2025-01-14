@@ -27,7 +27,7 @@ public class JobSeekerService {
 
 	@Autowired
 	RecruiterRepository recruiterRepository;
-	
+
 	@Autowired
 	JobRepository jobRepository;
 	
@@ -87,12 +87,12 @@ public class JobSeekerService {
 		session.setAttribute("success", "OTP Resent Success");
 		return "redirect:/jobseeker/otp/" + jobSeeker.getId();
 	}
-	
-	public String apply(Integer id, HttpSession session) {
+
+    public String apply(Integer id, HttpSession session) {
 		if (session.getAttribute("jobSeeker") != null) {
 			Job job = jobRepository.findById(id).orElseThrow();
 			JobSeeker jobSeeker = (JobSeeker) session.getAttribute("jobSeeker");
-
+			if(jobSeeker.isCompleted()){
 			List<JobApplication> applications=jobSeeker.getJobApplications();
 			if(applications.isEmpty()){
 				JobApplication application=new JobApplication();
@@ -123,10 +123,13 @@ public class JobSeekerService {
 				session.setAttribute("success", "Applied Successfully");
 				return "redirect:/jobseeker/view-jobs";
 			}
+		}else{
+			session.setAttribute("error", "Please Complete Your Profile First");
+			return "redirect:/jobseeker/home";
 		}
-		else{
+		} else {
 			session.setAttribute("error", "Invalid Session, Login Again");
 			return "redirect:/login";
 		}
-    }
+	}
 }

@@ -11,10 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.jsp.job_portal.dto.Education;
+import com.jsp.job_portal.dto.Experience;
 import com.jsp.job_portal.dto.Job;
 import com.jsp.job_portal.dto.JobSeeker;
+import com.jsp.job_portal.helper.CloudinaryHelper;
 import com.jsp.job_portal.repository.JobRepository;
+import com.jsp.job_portal.repository.JobSeekerRepository;
 import com.jsp.job_portal.service.JobSeekerService;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,11 +28,18 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/jobseeker")
 public class JobSeekerController {
+	
 	@Autowired
 	JobSeekerService seekerService;
 	
 	@Autowired
 	JobRepository jobRepository;
+	
+	@Autowired
+	JobSeekerRepository jobSeekerRepository;
+
+	@Autowired
+	CloudinaryHelper cloudinaryHelper;
 	
 	@GetMapping("/register")
 	public String loadRegister(JobSeeker jobSeeker, ModelMap map) {
@@ -88,5 +100,33 @@ public class JobSeekerController {
 		return seekerService.apply(id, session);
 	}
 
+	@GetMapping("/complete-profile")
+	public String completeProfile(HttpSession session) {
+		if (session.getAttribute("jobSeeker") != null) {
+			return "complete-profile.html";
+		} else {
+			session.setAttribute("error", "Invalid Session, Login Again");
+			return "redirect:/login";
+		}
+	}
+
+	@PostMapping("/complete-profile")
+	public String completeProfile(@RequestParam MultipartFile resume, @RequestParam MultipartFile profilePic,
+			Experience experience, Education education, HttpSession session) {
+		if (session.getAttribute("jobSeeker") != null) {
+			JobSeeker jobSeeker = (JobSeeker) session.getAttribute("jobSeeker");
+			jobSeeker.setEducation(education);
+			jobSeeker.setExperience(experience);
+			jobSeeker.setResumeUrl(cloudinaryHelper.savePdf(resume));
+			jobSeeker.setProfilePicUrl(cloudinaryHelper.saveImage(profilePic));
+			jobSeeker.setCompleted(true);
+			jobSeekerRepository.save(jobSeeker);
+			session.setAttribute("success", "Profile Completed, You can Apply for Jobs Now");
+			return "redirect:/jobseeker/home";
+		} else {
+			session.setAttribute("error", "Invalid Session, Login Again");
+			return "redirect:/login";
+		}
+	}
 
 }
