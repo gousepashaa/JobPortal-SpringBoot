@@ -9,6 +9,7 @@ import org.thymeleaf.context.Context;
 
 import com.jsp.job_portal.dto.JobSeeker;
 import com.jsp.job_portal.dto.Recruiter;
+
 import jakarta.mail.internet.MimeMessage;
 
 @Service
@@ -24,7 +25,7 @@ public class MyEmailSender {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		try {
-			helper.setFrom("ghousemd733@gmail.com", "Job-Portal Application");
+			helper.setFrom("saishkulkarni7@gmail.com", "Job-Portal Application");
 			helper.setTo(jobSeeker.getEmail());
 			helper.setSubject("Otp for Creating Account with Us");
 
@@ -36,13 +37,14 @@ public class MyEmailSender {
 			e.printStackTrace();
 		}
 		mailSender.send(message);
+
 	}
 
 	public void sendOtp(Recruiter recruiter) {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		try {
-			helper.setFrom("ghousemd733@gmail.com", "Job-Portal Application");
+			helper.setFrom("saishkulkarni7@gmail.com", "Job-Portal Application");
 			helper.setTo(recruiter.getEmail());
 			helper.setSubject("Otp for Creating Account with Us");
 
