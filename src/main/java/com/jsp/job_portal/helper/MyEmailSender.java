@@ -9,7 +9,6 @@ import org.thymeleaf.context.Context;
 
 import com.jsp.job_portal.dto.JobSeeker;
 import com.jsp.job_portal.dto.Recruiter;
-
 import jakarta.mail.internet.MimeMessage;
 
 @Service
@@ -37,7 +36,6 @@ public class MyEmailSender {
 			e.printStackTrace();
 		}
 		mailSender.send(message);
-
 	}
 
 	public void sendOtp(Recruiter recruiter) {

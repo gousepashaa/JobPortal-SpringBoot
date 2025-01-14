@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.jsp.job_portal.dto.Recruiter;
-import com.jsp.job_portal.helper.AES;
 import com.jsp.job_portal.helper.MyEmailSender;
 import com.jsp.job_portal.repository.JobSeekerRepository;
 import com.jsp.job_portal.repository.RecruiterRepository;
@@ -41,7 +40,7 @@ public class RecruiterService {
 			recruiter.setVerified(false);
 			recruiterRepository.save(recruiter);
 			System.err.println(recruiter.getOtp());
-			//emailSender.sendOtp(recruiter);
+			emailSender.sendOtp(recruiter);
 			session.setAttribute("success", "Otp Sent Success");
 			return "redirect:/recruiter/otp/" + recruiter.getId();
 		}
@@ -52,7 +51,6 @@ public class RecruiterService {
 		Recruiter recruiter=recruiterRepository.findById(id).orElseThrow();
 		if(recruiter.getOtp()==otp) {
 			recruiter.setVerified(true);
-			recruiter.setPassword(AES.encrypt(recruiter.getPassword()));
 			recruiterRepository.save(recruiter);
 			session.setAttribute("success", "Account Created Success");
 			return "redirect:/";
@@ -68,7 +66,7 @@ public class RecruiterService {
 		recruiter.setVerified(false);
 		recruiterRepository.save(recruiter);
 		System.err.println(recruiter.getOtp());
-		//emailSender.sendOtp(recruiter);
+		emailSender.sendOtp(recruiter);
 		session.setAttribute("success", "Otp Re-Sent Success");
 		return "redirect:/recruiter/otp/" + recruiter.getId();
 	}
